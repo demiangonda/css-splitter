@@ -1,6 +1,6 @@
 /**
  * CSS Splitter
- * This nodejs scripts receives a css filename as first argument, and creates for each mediaquery present in that file a new one.
+ * This nodejs script receives a css filename as first argument, and creates for each mediaquery present in that file a new one.
  * @author Gerardo Bort<gerardobort@gmail.com> | github.com/gerardobort
  * @date 20121130
  */
