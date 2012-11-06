@@ -12,3 +12,4 @@ Easy Usage
 ```bash
 node css-splitter.js my-css-file.css
 ```
+

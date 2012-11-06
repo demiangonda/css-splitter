@@ -5,6 +5,7 @@
  * @date 20121130
  */
 
+
 String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, ''); };
 
 // you can override this methos as you want
