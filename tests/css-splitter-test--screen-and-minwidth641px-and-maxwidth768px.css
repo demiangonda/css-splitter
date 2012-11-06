@@ -1,0 +1,3 @@
+/* tests/css-splitter-test.css | screen and (min-width:641px) and (max-width:768px) */
+
+#first-step { width: 80%;margin: 0 10% 0 10%;} #first-step .main-image-container.first-step { display: none;}undefined
