@@ -57,13 +57,14 @@ fs.readFile(inputFilename, encoding, function (err, block) {
                 .replace(/\) +and +\(/g, ') and (') // normalize queries
                 .replace(/: +/g, ':');
         }
+
         filename = getOutputFilename(inputFilename, query); // per mediaquery new output filename
         if (!outputFilesContent[filename]) {
             content = '/* ' + inputFilename + ' | ' + query + ' */\n\n' + rules; // attach comments to each new output file
             outputFilesContent[filename] = content;
             outputFilesQueries[filename] = query;
         } else {
-            content = content;
+            content = rules;
             outputFilesContent[filename] += content; // same mediaquery blocks merging
         }
     });
