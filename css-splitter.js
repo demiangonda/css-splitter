@@ -83,10 +83,14 @@ fs.readFile(inputFilename, encoding, function (err, block) {
     var importCssFilename = inputFilename.replace(/\.css$/, '') + '--import.css',
         importCssContent = '/* ' + inputFilename + ' */\n\n';
     for (filename in outputFilesQueries) {
-        var query = outputFilesQueries[filename];
+        var query = outputFilesQueries[filename],
+            relativeFilename = filename.replace(/^.*\/([^\/]+)$/, '$1'); // remove paths since the output files are relative to the import one
+        /*
         importCssContent += '@media '+ query + ' { '
-            + '@import url("' + filename + '");'
+            + '@import url("' + relativeFilename + '");'
             + ' }\n';
+        */
+        importCssContent += '@import url("' + relativeFilename + '") ' + query + ';\n';
     }
     fs.writeFile(importCssFilename, importCssContent, encoding, function (err, data) {
         if (err) {
