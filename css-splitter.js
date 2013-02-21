@@ -42,6 +42,11 @@ fs.readFile(inputFilename, encoding, function (err, block) {
         .replace(/\/\*[\s\S]*?\*\//g, '') // remove comments
         .match(/(@media .*?{[^@]*}}|[^@]+)/g) // match media queries
 
+    if (!mediaqueryBlocks) {
+        console.log('WARNING: no mediaquery blocks detected in: ' + inputFilename);
+        mediaqueryBlocks = [];
+    }
+
     // process blocks
     mediaqueryBlocks.forEach(function (block, index) {
         var mediaqueryBlock = block.match(/@media ([^{]*) ?{(.*)}/),
