@@ -1,6 +1,6 @@
 /* tests/css-splitter-test.css */
 
-@media screen and (max-width:640px) { @import url("tests/css-splitter-test--screen-and-maxwidth640px.css"); }
-@media screen and (min-width:641px) and (max-width:768px) { @import url("tests/css-splitter-test--screen-and-minwidth641px-and-maxwidth768px.css"); }
-@media screen and (max-width:1023px) { @import url("tests/css-splitter-test--screen-and-maxwidth1023px.css"); }
-@media all { @import url("tests/css-splitter-test--all.css"); }
+@import url("css-splitter-test--screen-and-maxwidth640px.css") screen and (max-width:640px);
+@import url("css-splitter-test--screen-and-minwidth641px-and-maxwidth768px.css") screen and (min-width:641px) and (max-width:768px);
+@import url("css-splitter-test--screen-and-maxwidth1023px.css") screen and (max-width:1023px);
+@import url("css-splitter-test--all.css") all;

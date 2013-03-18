@@ -34,18 +34,27 @@ fs.readFile(inputFilename, encoding, function (err, block) {
         return console.log(err);
     }
 
-    // split input file in @media blocks
-    var mediaqueryBlocks = block
+    // purify the css
+    var purifiedCss = block
         .replace(/[\n\t]/g, '') // remove breaklines and tabs
         .replace(/ +/g, ' ') // remove extra whitespaces
         .replace(/; +/g, ';') // remove whitespaces after semicolons
-        .replace(/\/\*[\s\S]*?\*\//g, '') // remove comments
-        .match(/(@media .*?{[^@]*}}|[^@]+)/g) // match media queries
+        .replace(/\/\*[\s\S]*?\*\//g, ''); // remove comments
+
+    // split input file in @media blocks
+    var mediaqueryBlocks = purifiedCss.match(/@media .*?{[^@]*}}/g) // match media queries
 
     if (!mediaqueryBlocks) {
         console.log('WARNING: no mediaquery blocks detected in: ' + inputFilename);
         mediaqueryBlocks = [];
     }
+
+    // generate a block for the dispersed rules that are not in any specific mediaquery (@media all)
+    var mediaAllBlock = '@media all {' + purifiedCss + '}';
+    mediaqueryBlocks.forEach(function (block, index) {
+        mediaAllBlock = mediaAllBlock.replace(block, '');
+    });
+    mediaqueryBlocks.push(mediaAllBlock);
 
     // process blocks
     mediaqueryBlocks.forEach(function (block, index) {
