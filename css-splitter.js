@@ -54,10 +54,15 @@ fs.readFile(inputFilename, encoding, function (err, block) {
     mediaqueryBlocks.forEach(function (block, index) {
         mediaAllBlock = mediaAllBlock.replace(block, '');
     });
-    mediaqueryBlocks.push(mediaAllBlock);
+
+    // generate a sorted array of blocks
+    var sortedMediaqueryBlocks = [mediaAllBlock];
+    mediaqueryBlocks.forEach(function (block, index) {
+        sortedMediaqueryBlocks.push(block);
+    });
 
     // process blocks
-    mediaqueryBlocks.forEach(function (block, index) {
+    sortedMediaqueryBlocks.forEach(function (block, index) {
         var mediaqueryBlock = block.match(/@media ([^{]*) ?{(.*)}/),
             query, rules, filename, content;
         if (null === mediaqueryBlock) {
@@ -74,7 +79,7 @@ fs.readFile(inputFilename, encoding, function (err, block) {
 
         filename = getOutputFilename(inputFilename, query); // per mediaquery new output filename
         if (!outputFilesContent[filename]) {
-            content = '/* ' + inputFilename + ' | ' + query + ' */\n\n' + rules; // attach comments to each new output file
+            content = '/* css-splitter :  http://github.com/gerardobort/css-splitter */\n\n' + rules; // attach comments to each new output file
             outputFilesContent[filename] = content;
             outputFilesQueries[filename] = query;
         } else {
@@ -100,11 +105,7 @@ fs.readFile(inputFilename, encoding, function (err, block) {
     for (filename in outputFilesQueries) {
         var query = outputFilesQueries[filename],
             relativeFilename = filename.replace(/^.*\/([^\/]+)$/, '$1'); // remove paths since the output files are relative to the import one
-        /*
-        importCssContent += '@media '+ query + ' { '
-            + '@import url("' + relativeFilename + '");'
-            + ' }\n';
-        */
+
         importCssContent += '@import url("' + relativeFilename + '") ' + query + ';\n';
     }
     fs.writeFile(importCssFilename, importCssContent, encoding, function (err, data) {

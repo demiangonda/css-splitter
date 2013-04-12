@@ -1,3 +1,3 @@
-/* tests/css-splitter-test.css | screen and (max-width:640px) */
+/* css-splitter :  http://github.com/gerardobort/css-splitter */
 
 #viewporter{overflow-x:visible;} .header-top p { margin:10px auto 0;position: static;}
